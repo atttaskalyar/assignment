@@ -10,12 +10,14 @@ const CountriesList = () => {
   const [filter1, setFilter1] = useState(false);
   const [filter2, setFilter2] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const [recordsPerPage] = useState(10);
   //values used for the filters and pagination
   const lithuanaArea = 62500;
   const region = "Oceania";
+
+//implementing pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [recordsPerPage] = useState(10);
 
   useEffect(() => {
     //initial loading
@@ -40,10 +42,8 @@ const CountriesList = () => {
         .filter((entry) => {
           return !(!filter2 && entry["area"] < lithuanaArea);
         });
-
-      
     });
-
+    //on every filter, we shift to page 1
     setCurrentPage(0);
   }, [filter1, filter2]);
 
@@ -51,9 +51,7 @@ const CountriesList = () => {
     setTotalPages(Math.ceil(displayData.length / recordsPerPage));
   }, [displayData]);
 
-  useEffect(() => {
-    console.log(totalPages);
-  }, [totalPages]);
+  useEffect(() => {}, [totalPages]);
 
   const sortToggle = () => {
     setAscending(!ascending);
@@ -63,12 +61,19 @@ const CountriesList = () => {
   return (
     <>
       <Box display="flex" justifyContent="space-between" mt="20px">
-        <Button onClick={sortToggle} sx={{bgcolor:"#FF9F1C", color:"white"}}>
+        <Button
+          onClick={sortToggle}
+          sx={{ bgcolor: "#FF9F1C", color: "white" }}
+        >
           {ascending ? "Ascending" : "Descending"}
         </Button>
         <Box display="flex" justifyContent="space-between">
           <Button
-            sx={{ bgcolor: filter1 ? "#2EC4B6" : "#CBF3F0", mr: "20px" ,color:"white"}}
+            sx={{
+              bgcolor: filter1 ? "#2EC4B6" : "#CBF3F0",
+              mr: "20px",
+              color: "white",
+            }}
             onClick={() => {
               setFilter1((prev) => !prev);
             }}
@@ -76,7 +81,7 @@ const CountriesList = () => {
             62500
           </Button>
           <Button
-            sx={{ bgcolor: filter2 ? "#2EC4B6" : "#CBF3F0" ,color:"white"}}
+            sx={{ bgcolor: filter2 ? "#2EC4B6" : "#CBF3F0", color: "white" }}
             onClick={() => {
               setFilter2((prev) => !prev);
             }}
@@ -92,10 +97,16 @@ const CountriesList = () => {
             .map(({ name, region, area }) => {
               return (
                 <Box key={name} bgcolor="#FF9F1C" p={1} pl={3} mt={3}>
-                  <Typography variant="body1" bgcolor="#FFBF69" width="fit-content" pl="7px" pr="7px">
+                  <Typography
+                    variant="body1"
+                    bgcolor="#FFBF69"
+                    width="fit-content"
+                    pl="7px"
+                    pr="7px"
+                  >
                     {name}
                   </Typography>
-                  
+
                   <Typography
                     variant="body1"
                     bgcolor="#FFBF69"
@@ -128,7 +139,10 @@ const CountriesList = () => {
             <Button
               key={index}
               onClick={() => setCurrentPage(index)}
-              sx={{p:0, width:"20px", color:"#2EC4B6", bgcolor:(index==currentPage)? "#ffffff":"#FFBF69"}}
+              sx={{
+                color: "#2EC4B6",
+                bgcolor: index == currentPage ? "#FFBF69" : "#FFFFFF",
+              }}
             >
               {index + 1}
             </Button>
