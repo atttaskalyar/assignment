@@ -14,7 +14,7 @@ const CountriesList = () => {
   const lithuanaArea = 62500;
   const region = "Oceania";
 
-//implementing pagination
+  //implementing pagination
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [recordsPerPage] = useState(10);
@@ -37,18 +37,10 @@ const CountriesList = () => {
     setDisplayData(() => {
       return data
         .filter((entry) => {
-            if(!filter1){
-                return true
-            }
-            return filter1 && entry['area']<lithuanaArea
-        //   return !(filter1 && entry["region"] === region);
+          return !filter1 || (filter1 && entry["area"] < lithuanaArea);
         })
         .filter((entry) => {
-            if(!filter2){
-                return true
-            }
-            return filter2 && entry['region']===region
-        //   return !(filter2 && entry["area"] < lithuanaArea);
+          return !filter2 || (filter2 && entry["region"] === region);
         });
     });
     //on every filter, we shift to page 1
@@ -86,7 +78,7 @@ const CountriesList = () => {
               setFilter1((prev) => !prev);
             }}
           >
-            62500
+           &lt; 62500
           </Button>
           <Button
             sx={{ bgcolor: filter2 ? "#2EC4B6" : "#CBF3F0", color: "white" }}
