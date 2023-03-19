@@ -47,7 +47,7 @@ const CountriesList = () => {
             if(!filter2){
                 return true
             }
-            return filter2 && entry['region']<region
+            return filter2 && entry['region']===region
         //   return !(filter2 && entry["area"] < lithuanaArea);
         });
     });
