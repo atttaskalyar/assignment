@@ -37,10 +37,18 @@ const CountriesList = () => {
     setDisplayData(() => {
       return data
         .filter((entry) => {
-          return !(!filter1 && entry["region"] === region);
+            if(!filter1){
+                return true
+            }
+            return filter1 && entry['area']<lithuanaArea
+        //   return !(filter1 && entry["region"] === region);
         })
         .filter((entry) => {
-          return !(!filter2 && entry["area"] < lithuanaArea);
+            if(!filter2){
+                return true
+            }
+            return filter2 && entry['region']<region
+        //   return !(filter2 && entry["area"] < lithuanaArea);
         });
     });
     //on every filter, we shift to page 1
